@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 
 char *revstr(char *str, size_t len)//单纯的反转字符串
 {
@@ -65,14 +66,50 @@ void konggefanzhuan(char *str){//遇到空格反转
     }
 }
 
+char *yasuo(char *str){//aaabbcccc->3a2b4c
 
-int main(int argc, const char * argv[]) {
+    char newStr[1024] = {};
+    int j = 0;
+    int count = 1;
+    while (*str++) {
+        if (*str == *(str-1)) {
+            count++;
+        } else {
+            if (count == 1) {
+                newStr[j] = *(str-1);
+                j++;
+            } else {
+                char a[2];
+                sprintf(a, "%d",count);
+                newStr[j] = a[0];
+                newStr[j+1] = *(str-1);
+                j = j+2;
+            }
+            count = 1;
+        }
+
+    }
+    //感觉写的没错，逻辑肯定对啊，但是必须printf一次才能正常输出，好气啊
+    //printf("----%s",newStr);
+    //newStr[j] = 'a';
+    //printf("2----%s",newStr);
+
+    str = newStr;
+    return str;
+}
+
+int main() {
     // insert code here...
-    char str1[] = { "hello  india mifun          "};
+    //char str1[] = { "hello  india mifun          "};
+    
+    char str1[1024];
+    while (gets(str1)){
 
-    konggefanzhuan(str1);
-    printf("~%s~\n",str1);
-    printf("-%s-\n",revstr(str1, lenthofstr(str1)));
+        printf("=%s=\n",yasuo(str1));
+
+    }
+    
+    
     return 0;
 }
 
